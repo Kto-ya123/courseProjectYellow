@@ -1,0 +1,30 @@
+# depslib dependency file v1.0
+1561371332 source:/home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/date.cpp
+	"date.h"
+
+1561371837 /home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/date.h
+	<exception>
+	<iostream>
+	<cmath>
+	<string>
+
+1561373552 source:/home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/database.cpp
+	"database.h"
+
+1561373567 /home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/database.h
+	<exception>
+	<iostream>
+	<cmath>
+	<string>
+	<vector>
+	<set>
+	<map>
+	"date.h"
+
+1561373609 source:/home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/main.cpp
+	"database.h"
+	"date.h"
+	<sstream>
+	<iostream>
+	<stdexcept>
+
