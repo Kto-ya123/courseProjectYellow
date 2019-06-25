@@ -26,16 +26,21 @@ enum class LogicalOperation{
 };
 
 class Node{
+public:
     virtual TypeNode type()const = 0;
+    virtual bool Evaluate(Date date, string event) const = 0;
 };
 
 class EmptyNode : public Node{
+public:
+    bool Evaluate(Date date, string event) const;
     TypeNode type()const;
 };
 
 class DateComparisonNode : public Node{
 public:
     DateComparisonNode(Comparison cmp, Date date);
+    bool Evaluate(Date date, string event) const;
     TypeNode type()const;
     Comparison comparison;
     Date value;
@@ -44,6 +49,7 @@ public:
 class EventComparisonNode : public Node{
 public:
     EventComparisonNode(Comparison cmp, string event);
+    bool Evaluate(Date date, string event) const;
     TypeNode type()const;
     Comparison comparison;
     string value;
@@ -52,9 +58,9 @@ public:
 class LogicalOperationNode : public Node{
 public:
     LogicalOperationNode(LogicalOperation logOper, shared_ptr<Node> lt, shared_ptr<Node> rh);
+    bool Evaluate(Date date, string event) const;
     TypeNode type()const;
     LogicalOperation logicalOperation;
     shared_ptr<Node> left;
     shared_ptr<Node> right;
-
 };

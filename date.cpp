@@ -1,5 +1,7 @@
 #include"date.h"
 
+Date::Date(int _year, int _month, int _day): year(_year), month(_month), day(_day){};
+
 Date::Date(string dateString){
     for(int i(0); i < dateString.size(); i++){
         if((dateString[i] < 48 || dateString[i] >= 58) && dateString[i] != '-' && dateString[i] != '+'){
@@ -83,3 +85,13 @@ bool operator<(const Date& lhs, const Date& rhs){
         return lhs.GetDay() < rhs.GetDay();
     }
 };
+
+bool operator==(const Date& lhs, const Date& rhs){
+    return (lhs.GetYear() == rhs.GetYear()) &&
+            (lhs.GetMonth() == rhs.GetMonth()) &&
+            (lhs.GetDay() == rhs.GetDay());
+}
+
+bool operator!=(const Date& lhs, const Date& rhs){
+    return !(lhs == rhs);
+}

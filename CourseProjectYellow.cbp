@@ -34,7 +34,9 @@
 		</Compiler>
 		<Unit filename="condition_parser.cpp" />
 		<Unit filename="condition_parser.h" />
-		<Unit filename="condition_parser_test.cpp" />
+		<Unit filename="condition_parser_test.cpp">
+			<Option target="Release" />
+		</Unit>
 		<Unit filename="database.cpp" />
 		<Unit filename="database.h" />
 		<Unit filename="date.cpp" />
@@ -42,7 +44,9 @@
 		<Unit filename="main.cpp" />
 		<Unit filename="node.cpp" />
 		<Unit filename="node.h" />
-		<Unit filename="oldSolution.cpp" />
+		<Unit filename="oldSolution.cpp">
+			<Option target="Release" />
+		</Unit>
 		<Unit filename="token.cpp" />
 		<Unit filename="token.h" />
 		<Extensions>

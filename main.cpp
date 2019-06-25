@@ -2,7 +2,7 @@
 #include "date.h"
 #include "condition_parser.h"
 #include "node.h"
-//#include "test_runner.h"
+#include "test_runner.h"
 
 #include<sstream>
 #include <iostream>
@@ -20,6 +20,7 @@ void TestAll();
 
 int main() {
   //TestAll();
+  TestParseCondition();
 
   Database db;
 
