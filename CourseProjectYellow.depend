@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1561371332 source:/home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/date.cpp
+1561377345 source:/home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/date.cpp
 	"date.h"
 
 1561371837 /home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/date.h
@@ -21,10 +21,22 @@
 	<map>
 	"date.h"
 
-1561373609 source:/home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/main.cpp
+1561459717 source:/home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/main.cpp
 	"database.h"
 	"date.h"
+	"condition_parser.h"
+	"node.h"
 	<sstream>
 	<iostream>
 	<stdexcept>
+
+1561456152 /home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/condition_parser.h
+	"node.h"
+	<memory>
+	<iostream>
+
+1561460675 /home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/node.h
+	<memory>
+	<string>
+	"date.h"
 

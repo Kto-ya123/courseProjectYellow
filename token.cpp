@@ -4,6 +4,8 @@
 
 using namespace std;
 
+//Token::Token(val, typeOperation): value(val), type(typeOperation){}
+
 vector<Token> Tokenize(istream& cl) {
   vector<Token> tokens;
 
@@ -81,6 +83,5 @@ vector<Token> Tokenize(istream& cl) {
       }
     }
   }
-
   return tokens;
 }
