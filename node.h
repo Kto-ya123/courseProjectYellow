@@ -26,17 +26,17 @@ enum class LogicalOperation{
 };
 
 class Node{
-    virtual TypeNode type() = 0;
+    virtual TypeNode type()const = 0;
 };
 
 class EmptyNode : public Node{
-    TypeNode type();
+    TypeNode type()const;
 };
 
 class DateComparisonNode : public Node{
 public:
-    DateComparisonNode(Comparison cmp, Date& date);
-    TypeNode type();
+    DateComparisonNode(Comparison cmp, Date date);
+    TypeNode type()const;
     Comparison comparison;
     Date value;
 };
@@ -44,15 +44,15 @@ public:
 class EventComparisonNode : public Node{
 public:
     EventComparisonNode(Comparison cmp, string event);
-    TypeNode type();
+    TypeNode type()const;
     Comparison comparison;
     string value;
 };
 
 class LogicalOperationNode : public Node{
 public:
-    LogicalOperationNode(LogicalOperation logOper, shared_ptr<Node>& lt, shared_ptr<Node>& rh);
-    TypeNode type();
+    LogicalOperationNode(LogicalOperation logOper, shared_ptr<Node> lt, shared_ptr<Node> rh);
+    TypeNode type()const;
     LogicalOperation logicalOperation;
     shared_ptr<Node> left;
     shared_ptr<Node> right;
