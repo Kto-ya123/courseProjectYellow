@@ -1,11 +1,8 @@
 #include "database.h"
-#include "date.h"
 #include "condition_parser.h"
-#include "node.h"
-#include "test_runner.h"
+//#include "test_runner.h"
 
 #include<sstream>
-#include <iostream>
 #include <stdexcept>
 
 using namespace std;
@@ -13,15 +10,15 @@ using namespace std;
 string ParseEvent(istream& is){
     string inputEvent;
     getline(is, inputEvent);
-    return inputEvent.substr(1);
+    while(inputEvent[0] == ' '){
+        inputEvent = inputEvent.substr(1);
+    }
+    return inputEvent;
 }
 
-void TestAll();
+//void TestAll();
 
 int main() {
-  //TestAll();
-  TestParseCondition();
-
   Database db;
 
   for (string line; getline(cin, line); ) {
@@ -35,7 +32,7 @@ int main() {
       db.Add(date, event);
     } else if (command == "Print") {
       db.Print(cout);
-    } /*else if (command == "Del") {
+    } else if (command == "Del") {
       auto condition = ParseCondition(is);
       auto predicate = [condition](const Date& date, const string& event) {
         return condition->Evaluate(date, event);
@@ -63,7 +60,7 @@ int main() {
       continue;
     } else {
       throw logic_error("Unknown command: " + command);
-    }*/
+    }
   }
 
   return 0;
@@ -90,5 +87,6 @@ int main() {
 void TestAll() {
   TestRunner tr;
   tr.RunTest(TestParseEvent, "TestParseEvent");
-  tr.RunTest(TestParseCondition, "TestParseCondition");
-}*/
+  //tr.RunTest(TestParseCondition, "TestParseCondition");
+}
+*/

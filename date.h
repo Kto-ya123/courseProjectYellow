@@ -15,6 +15,7 @@ public:
     int GetYear() const;
     int GetMonth()const;
     int GetDay()const;
+    string GetDateString()const;
 
 private:
     int year;
@@ -24,6 +25,7 @@ private:
 
 Date ParseDate(istream& is);
 
+ostream& operator<< (ostream&, const Date&);
 bool operator<(const Date& lhs, const Date& rhs);
 bool operator==(const Date& lhs, const Date& rhs);
 bool operator!=(const Date& lhs, const Date& rhs);

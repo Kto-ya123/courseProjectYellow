@@ -1,6 +1,14 @@
 #include"date.h"
 
-Date::Date(int _year, int _month, int _day): year(_year), month(_month), day(_day){};
+Date::Date(int _year, int _month, int _day) {
+    if(_year > 9999){
+        throw invalid_argument("bad year");
+    }else if(_month > 12 || _month < 1){
+        throw invalid_argument("bad month");
+    }else if(_day < 1 || _day > 31){
+        throw invalid_argument("bad day");
+    }
+};
 
 Date::Date(string dateString){
     for(int i(0); i < dateString.size(); i++){
@@ -67,7 +75,26 @@ int Date::GetDay() const{
     return day;
 }
 
-
+string Date::GetDateString()const{
+        string date = "";
+        if(GetYear() < 10){
+            date += "000";
+        }else if(GetYear() < 100){
+            date += "00";
+        }else if(GetYear() < 1000){
+            date += "0";
+        }
+        date += to_string(GetYear()) + '-';
+        if(GetMonth() < 10){
+            date += "0";
+        }
+        date += to_string(GetMonth()) + '-';
+        if(GetDay() < 10){
+            date += "0";
+        }
+        date += to_string(GetDay());
+        return date;
+}
 
 Date ParseDate(istream& is){
     string dateString;
@@ -94,4 +121,9 @@ bool operator==(const Date& lhs, const Date& rhs){
 
 bool operator!=(const Date& lhs, const Date& rhs){
     return !(lhs == rhs);
+}
+
+ostream& operator<< (ostream& os, const Date& date){
+    os << date.GetYear() << "-" << date.GetMonth() << "-" << date.GetDay();
+    return os;
 }

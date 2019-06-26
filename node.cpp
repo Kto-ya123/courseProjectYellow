@@ -32,6 +32,7 @@ bool DateComparisonNode::Evaluate(Date date, string event) const{
             return true;
         }
     }
+    return true;
 }
 TypeNode DateComparisonNode::type()const{
     return TypeNode::EmptyNode;
@@ -45,6 +46,7 @@ bool EventComparisonNode::Evaluate(Date date, string event) const{
     }else if(this->comparison == Comparison::NotEqual){
         return event != this->value;
     }
+    return true;
 }
 TypeNode EventComparisonNode::type()const{
     return TypeNode::EmptyNode;
@@ -55,8 +57,9 @@ bool LogicalOperationNode::Evaluate(Date date, string event) const{
     if(this->logicalOperation == LogicalOperation::Or){
         return (this->left->Evaluate(date, event) || this->right->Evaluate(date, event));
     }else if(this->logicalOperation == LogicalOperation::And){
-        return this->left->Evaluate(date, event) || this->right->Evaluate(date, event);
+        return this->left->Evaluate(date, event) && this->right->Evaluate(date, event);
     }
+    return true;
 }
 TypeNode LogicalOperationNode::type()const{
     return TypeNode::EmptyNode;

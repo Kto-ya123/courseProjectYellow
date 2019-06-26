@@ -1,17 +1,17 @@
 # depslib dependency file v1.0
-1561474624 source:/home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/date.cpp
+1561567710 source:/home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/date.cpp
 	"date.h"
 
-1561474594 /home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/date.h
+1561556622 /home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/date.h
 	<exception>
 	<iostream>
 	<cmath>
 	<string>
 
-1561373552 source:/home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/database.cpp
+1561567322 source:/home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/database.cpp
 	"database.h"
 
-1561373567 /home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/database.h
+1561557150 /home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/database.h
 	<exception>
 	<iostream>
 	<cmath>
@@ -20,15 +20,13 @@
 	<set>
 	<map>
 	"date.h"
-
-1561474868 source:/home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/main.cpp
-	"database.h"
-	"date.h"
-	"condition_parser.h"
 	"node.h"
-	"test_runner.h"
+	<functional>
+
+1561555145 source:/home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/main.cpp
+	"database.h"
+	"condition_parser.h"
 	<sstream>
-	<iostream>
 	<stdexcept>
 
 1561456152 /home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/condition_parser.h
@@ -50,14 +48,14 @@
 	<sstream>
 	<vector>
 
-1561474783 source:/home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/node.cpp
+1561554623 source:/home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/node.cpp
 	"node.h"
 
 1561456112 source:/home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/token.cpp
 	"token.h"
 	<stdexcept>
 
-1561471957 /home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/test_runner.h
+1561548013 /home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/test_runner.h
 	<iostream>
 	<map>
 	<set>
@@ -65,4 +63,9 @@
 	<stdexcept>
 	<string>
 	<vector>
+
+1561471872 source:/home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/condition_parser_test.cpp
+	"condition_parser.h"
+	"test_runner.h"
+	<sstream>
 
