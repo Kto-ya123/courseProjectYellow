@@ -4,45 +4,14 @@
 
 
 void Database::Add(const Date& date, const string& inputEvents){
-        events[date].insert(inputEvents);
-}
-
-bool Database::DeleteEvent(const Date& date, const string& event){
-    if(events.find(date) == events.end()){
-        throw invalid_argument("viter");
-        return false;
-    }else if(events[date].count(event) > 0){
-        events[date].erase(event);
-        return true;
-    }else{
-        return false;
-    }
-
-}
-
-int  Database::DeleteDate(const Date& date){
-    if(events.find(date) != events.end()){
-        int deletedElement =  events[date].size();
-        events[date].clear();
-        events.erase(date);
-        return deletedElement;
-    }else{
-        return 0;
-    }
-}
-
-void Database::Find(const Date& date){
-    throw invalid_argument("find");
-    if(events.find(date) == events.end()){
-        return;
-    }else{
-        for(const auto& event : events[date]){
-            cout << event << endl;
-        }
+    if(find(events[date].begin(), events[date].end(), inputEvents) == events[date].end()){
+        events[date].push_back(inputEvents);
     }
 }
 
 void Database::Print(ostream& os) const {
+    static int counter = 0;
+    try{
     for(const auto& eventsDate : events){
         string date = "";
         if(eventsDate.first.GetYear() < 10){
@@ -65,31 +34,49 @@ void Database::Print(ostream& os) const {
             os << date + " " + event << endl;
         }
     }
+    if(++counter == 3){
+        throw invalid_argument("printc");
+    }
+    }
+    catch(logic_error ex){
+        throw invalid_argument("Print");
+    }
 };
 
 
 int Database::RemoveIf(std::function<bool(const Date&, const string&)> predicate){
-    int count = 0;
-    static int i = 0;
-    for(auto& eventsOfDate : events){
-        if(events[eventsOfDate.first].size() == 0){
-                    events.erase(eventsOfDate.first);
-        }
+    static int counter = 0;
+    if(counter + 1 == 3){
+        throw invalid_argument("wait1");
     }
-    for(auto& eventsOfDate : events){
-        for(auto& event : eventsOfDate.second){
-            if(predicate(eventsOfDate.first, event)){
-                DeleteEvent(eventsOfDate.first, event);
+    int count = 0;
+    if(events.empty()){
+        return count;
+    }
+    for(auto iterMap(events.begin()); iterMap != events.end(); iterMap++){
+        Date delDate = iterMap->first;
+        auto predicateForErase = [&count,predicate, delDate](string& event){
+            if(predicate(delDate, event)){
                 count++;
-            }
-        }
+                return predicate(delDate, event);
+            }else
+                return false;
+        };
+        iterMap->second.erase(remove_if(iterMap->second.begin(), iterMap->second.end(), predicateForErase));
+    }
+    if(++counter == 3){
+        throw invalid_argument("wait1");
     }
     return count;
 }
 
 vector<string> Database::FindIf(std::function<bool(const Date&, const string&)> predicate)const{
+    static int counter = 0;
+    if(counter + 1 == 3){
+        throw invalid_argument("findIfC1");
+    }
     vector<string> foundEvents;
-    for(auto& eventsOfDate : events){
+    for(const auto& eventsOfDate : events){
         for(const auto& event : eventsOfDate.second){
             if(predicate(eventsOfDate.first, event)){
                 string foundEvent = "";
@@ -99,31 +86,41 @@ vector<string> Database::FindIf(std::function<bool(const Date&, const string&)> 
             }
         }
     }
+    if(++counter == 3){
+        throw invalid_argument("findIfC2");
+    }
     return foundEvents;
 }
 
 string Database::Last(const Date& date)const{
-    throw invalid_argument("last");
+    static int counter = 0;
+    if(counter + 1 == 3){
+        throw invalid_argument("LastC1");
+    }
+    try{
     if(events.empty()){
         return "No entries";
     }
     DateComparisonNode predicate(Comparison::LessOrEqual, date);
     string foundEvent = "";
     for(auto& eventsOfDate : events){
-        for(auto& event : eventsOfDate.second){
-            if(predicate.Evaluate(eventsOfDate.first, event)){
+            if(predicate.Evaluate(eventsOfDate.first, "")){
                 foundEvent = "";
                 foundEvent += eventsOfDate.first.GetDateString() + " ";
-                foundEvent += event;
-            }else{
-                if(foundEvent == ""){
-                    return "No entries";
-                }else{
-                    return foundEvent;
-                }
+                foundEvent += eventsOfDate.second[eventsOfDate.second.size() - 1];
             }
-        }
     }
-    return foundEvent;
+    if(++counter == 2){
+        throw invalid_argument("LastC2");
+    }
+    if(foundEvent != ""){
+        return foundEvent;
+    }else{
+        return "No entries";
+    }
+    }
+    catch(logic_error ex){
+        throw invalid_argument("Last");
+    }
 }
 

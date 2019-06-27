@@ -8,10 +8,10 @@
 	<cmath>
 	<string>
 
-1561567322 source:/home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/database.cpp
+1561634152 source:/home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/database.cpp
 	"database.h"
 
-1561557150 /home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/database.h
+1561635360 /home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/database.h
 	<exception>
 	<iostream>
 	<cmath>
@@ -22,6 +22,7 @@
 	"date.h"
 	"node.h"
 	<functional>
+	<algorithm>
 
 1561555145 source:/home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/main.cpp
 	"database.h"
