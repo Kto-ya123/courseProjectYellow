@@ -45,8 +45,15 @@ bool EventComparisonNode::Evaluate(Date date, string event) const{
         return event == this->value;
     }else if(this->comparison == Comparison::NotEqual){
         return event != this->value;
+    }else if(this->comparison == Comparison::Greater){
+        return event > this->value;
+    }else if(this->comparison == Comparison::GreaterOrEqual){
+        return event >= this->value;
+    }else if(this->comparison == Comparison::Less){
+        return event < this->value;
+    }else if(this->comparison == Comparison::LessOrEqual){
+        return event <= this->value;
     }
-    return true;
 }
 TypeNode EventComparisonNode::type()const{
     return TypeNode::EmptyNode;

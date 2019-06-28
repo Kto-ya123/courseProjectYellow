@@ -11,6 +11,7 @@
 #include"node.h"
 #include<functional>
 #include<algorithm>
+#include<iomanip>
 
 using namespace std;
 
@@ -23,4 +24,7 @@ public:
     void Print(ostream& os) const;
 private:
     map<Date, vector<string>> events;
+    map<Date, set<string>> dbEvents;
 };
+
+bool operator<(pair<Date, vector<string>> lhs, pair<Date, vector<string>> rhs);

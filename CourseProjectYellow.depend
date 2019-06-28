@@ -1,17 +1,18 @@
 # depslib dependency file v1.0
-1561567710 source:/home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/date.cpp
+1561725748 source:/home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/date.cpp
 	"date.h"
 
-1561556622 /home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/date.h
+1561725720 /home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/date.h
 	<exception>
 	<iostream>
 	<cmath>
 	<string>
+	<iomanip>
 
-1561634152 source:/home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/database.cpp
+1561728508 source:/home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/database.cpp
 	"database.h"
 
-1561635360 /home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/database.h
+1561724352 /home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/database.h
 	<exception>
 	<iostream>
 	<cmath>
@@ -23,6 +24,7 @@
 	"node.h"
 	<functional>
 	<algorithm>
+	<iomanip>
 
 1561555145 source:/home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/main.cpp
 	"database.h"
@@ -49,7 +51,7 @@
 	<sstream>
 	<vector>
 
-1561554623 source:/home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/node.cpp
+1561706491 source:/home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/node.cpp
 	"node.h"
 
 1561456112 source:/home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/token.cpp

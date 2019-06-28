@@ -4,6 +4,7 @@
 #include<iostream>
 #include<cmath>
 #include<string>
+#include<iomanip>
 
 using namespace std;
 
@@ -27,6 +28,7 @@ Date ParseDate(istream& is);
 
 ostream& operator<< (ostream&, const Date&);
 bool operator<(const Date& lhs, const Date& rhs);
+bool operator>(const Date& lhs, const Date& rhs);
 bool operator==(const Date& lhs, const Date& rhs);
 bool operator!=(const Date& lhs, const Date& rhs);
 
