@@ -1,6 +1,6 @@
 #include "database.h"
 #include "condition_parser.h"
-//#include "test_runner.h"
+#include "test_runner.h"
 
 #include<sstream>
 #include <stdexcept>
@@ -16,9 +16,10 @@ string ParseEvent(istream& is){
     return inputEvent;
 }
 
-//void TestAll();
+void TestAll();
 
 int main() {
+    TestAll();
   Database db;
 
   for (string line; getline(cin, line); ) {
@@ -82,11 +83,34 @@ int main() {
     events.push_back(ParseEvent(is));
     AssertEqual(events, vector<string>{"first event  ", "second event"}, "Parse multiple events");
   }
+}*/
+void TestBase(){
+    Database db;
+    {
+        for(int i(0); i < 10000; i++){
+            db.Add(Date(i, 11, 10), to_string(i));
+        }
+        db.Print(cout);
+        for(int i(0); i < 1000; i++){
+            auto condition = make_shared<EventComparisonNode>(EventComparisonNode(Comparison::Equal, to_string(i)));
+            auto predicate = [condition](const Date& date, const string& event) {
+                return condition->Evaluate(date, event);
+            };
+            db.RemoveIf(predicate);
+
+        }
+        for(int i(0); i < 10000; i++){
+            db.Last(Date(i, 11, 10));
+        }
+        db.Add(Date(2019,11,10), "xer");
+        db.Print(cout);
+    }
 }
 
 void TestAll() {
   TestRunner tr;
-  tr.RunTest(TestParseEvent, "TestParseEvent");
+  tr.RunTest(TestBase, "Test DataBase");
+  //tr.RunTest(TestParseEvent, "TestParseEvent");
   //tr.RunTest(TestParseCondition, "TestParseCondition");
 }
-*/
+
