@@ -6,6 +6,7 @@
 #include<string>
 #include<vector>
 #include<set>
+#include<list>
 #include<map>
 #include"date.h"
 #include"node.h"

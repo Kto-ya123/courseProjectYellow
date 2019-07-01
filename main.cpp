@@ -1,7 +1,7 @@
 #include "database.h"
 #include "condition_parser.h"
 #include "test_runner.h"
-
+#include<time.h>
 #include<sstream>
 #include <stdexcept>
 
@@ -16,10 +16,17 @@ string ParseEvent(istream& is){
     return inputEvent;
 }
 
+ostream& operator<< (ostream& os, const pair<Date, vector<string>>& outData){
+    for(const auto& event : outData.second){
+        os << outData.first << " " << event;
+    }
+    return os;
+}
+
 void TestAll();
 
 int main() {
-    TestAll();
+  //TestAll();
   Database db;
 
   for (string line; getline(cin, line); ) {
@@ -87,10 +94,12 @@ int main() {
 void TestBase(){
     Database db;
     {
+
         for(int i(0); i < 10000; i++){
             db.Add(Date(i, 11, 10), to_string(i));
         }
         db.Print(cout);
+        float fTimeStart = clock()/(float)CLOCKS_PER_SEC;
         for(int i(0); i < 1000; i++){
             auto condition = make_shared<EventComparisonNode>(EventComparisonNode(Comparison::Equal, to_string(i)));
             auto predicate = [condition](const Date& date, const string& event) {
@@ -99,11 +108,49 @@ void TestBase(){
             db.RemoveIf(predicate);
 
         }
+        float fTimeEnd = clock()/(float)CLOCKS_PER_SEC;
+        float timeRemoveOne = fTimeEnd - fTimeStart;
         for(int i(0); i < 10000; i++){
             db.Last(Date(i, 11, 10));
         }
+        float timeLast = (clock()/(float)CLOCKS_PER_SEC) - fTimeEnd;
+        fTimeEnd = clock()/(float)CLOCKS_PER_SEC;
         db.Add(Date(2019,11,10), "xer");
         db.Print(cout);
+        for(int i(0); i < 10000; i++){
+            db.Add(Date(i, 11, 10), to_string(i));
+        }
+        float timeAdd = (clock()/(float)CLOCKS_PER_SEC) - fTimeEnd;
+        fTimeEnd = clock()/(float)CLOCKS_PER_SEC;
+        db.Print(cout);
+        auto condition = make_shared<DateComparisonNode>(DateComparisonNode(Comparison::LessOrEqual, Date(9999, 9,9)));
+        auto predicate = [condition](const Date& date, const string& event) {
+            return condition->Evaluate(date, event);
+        };
+        db.RemoveIf(predicate);
+        float timeDelete = (clock()/(float)CLOCKS_PER_SEC) - fTimeEnd;
+        for(int i(0); i < 10000; i++){
+            db.Add(Date(i, 11, 10), to_string(i));
+        }
+        fTimeEnd = clock()/(float)CLOCKS_PER_SEC;
+        {
+        for(int i(0); i < 1; i++){
+            //auto condition = make_shared<EventComparisonNode>(EventComparisonNode(Comparison::Equal, to_string(i)));
+            auto condition = make_shared<EmptyNode>(EmptyNode());
+            auto predicate = [condition](const Date& date, const string& event) {
+                return condition->Evaluate(date, event);
+            };
+            db.FindIf(predicate);
+        }
+        }
+        float timeFind = (clock()/(float)CLOCKS_PER_SEC) - fTimeEnd;
+        cout << "timeDeleteByOne: " << timeRemoveOne <<endl;
+        cout << "timeLast: " << timeLast <<endl;
+        cout << "timeAdd: " << timeAdd <<endl;
+        cout << "timeDelete: " <<timeDelete <<endl;
+        cout << "timeFind: " << timeFind <<endl;
+        db.Add(Date(2019,11,10), "xer");
+        //db.Print(cout);
     }
 }
 
