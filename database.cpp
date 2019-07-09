@@ -4,9 +4,11 @@
 
 
 void Database::Add(const Date& date, const string& inputEvents){
-    if(dbEvents[date].find(inputEvents) == dbEvents[date].end()){
-        dbEvents[date].insert(inputEvents);
-        events[date].push_back(inputEvents);
+    auto& eventsDate =  events[date];
+    if(eventsDate.second.find(inputEvents) == eventsDate.second.end()){
+        dates.insert(date);
+        eventsDate.second.insert(inputEvents);
+        eventsDate.first.push_back(inputEvents);
     }
 }
 
@@ -32,7 +34,7 @@ void Database::Print(ostream& os) const {
             date += "0";
         }
         date += to_string(num);
-        for(const auto& event : eventsDate.second){
+        for(const auto& event : eventsDate.second.first){
             os << date << " " << event << endl;
         }
     }
@@ -45,20 +47,20 @@ int Database::RemoveIf(std::function<bool(const Date&, const string&)> predicate
         Date delDate = iterMap->first;
         auto predicateForErase = [&count, predicate, delDate](string& event){
             if(predicate(delDate, event)){
-                //this->dbEvents[delDate].erase(event);
                 count++;
                 return false;
             }else
                 return true;
         };
-        auto delIter = stable_partition(iterMap->second.begin(), iterMap->second.end(), predicateForErase);
+        auto delIter = stable_partition(iterMap->second.first.begin(), iterMap->second.first.end(), predicateForErase);
         //iterMap->second.erase(delIter, iterMap->second.end());
-        int counter = iterMap->second.end() - delIter;
+        int counter = iterMap->second.first.end() - delIter;
         for(int i(0); i < counter; i++){
-            dbEvents[delDate].erase(iterMap->second[iterMap->second.size() - 1]);
-            iterMap->second.pop_back();
+            iterMap->second.second.erase(iterMap->second.first[iterMap->second.first.size() - 1]);
+            iterMap->second.first.pop_back();
         }
-        if(iterMap->second.size() == 0){
+        if(iterMap->second.first.size() == 0){
+            dates.erase(iterMap->first);
             events.erase(iterMap++);
         }else {
             iterMap++;
@@ -70,7 +72,7 @@ int Database::RemoveIf(std::function<bool(const Date&, const string&)> predicate
 vector<string> Database::FindIf(std::function<bool(const Date&, const string&)> predicate)const{
     vector<string> foundEvents;
     for(const auto& eventsOfDate : events){
-            for(const auto& event : eventsOfDate.second){
+            for(const auto& event : eventsOfDate.second.first){
                 if(predicate(eventsOfDate.first, event)){
                     foundEvents.push_back(eventsOfDate.first.GetDateString() + " " + event);
                 }
@@ -80,20 +82,20 @@ vector<string> Database::FindIf(std::function<bool(const Date&, const string&)> 
 }
 
 string Database::Last(const Date& date)const{
-        auto foundIter = lower_bound(events.begin(), events.end(), pair<Date, vector<string>>(date, {""}));
-        if(foundIter != events.begin() || date == foundIter->first){
-            if(date != foundIter->first){
-                --foundIter;
-            }
-            return foundIter->first.GetDateString() + " "
-                + foundIter->second[foundIter->second.size() - 1];
-        }else{
-            return "No entries";
+    auto foundIter = lower_bound(events.begin(), events.end(), pair<Date, pair<vector<string>, set<string>>>{date, {{""}, {""}}});
+    if(foundIter != events.begin() || date == foundIter->first){
+        if(date != foundIter->first){
+            --foundIter;
         }
         return foundIter->first.GetDateString() + " "
-                + foundIter->second[foundIter->second.size() - 1];
+            + foundIter->second.first[foundIter->second.first.size() - 1];
+    }else{
+        return "No entries";
+    }
+    return foundIter->first.GetDateString() + " "
+            + foundIter->second.first[foundIter->second.first.size() - 1];
 }
 
-bool operator<(pair<Date, vector<string>> lhs, pair<Date, vector<string>> rhs){
+bool operator<(const pair<Date, pair<vector<string>, set<string>>>& lhs, const pair<Date, pair<vector<string>, set<string>>>& rhs){
     return lhs.first < rhs.first;
 }

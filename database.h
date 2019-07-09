@@ -24,9 +24,8 @@ public:
     vector<string> FindIf(std::function<bool(const Date&, const string&)>)const;
     void Print(ostream& os) const;
 private:
-    map<Date, vector<string>> events;
-    //map<Date, pair<vector<string>, set<string>>> events;
-    map<Date, set<string>> dbEvents;
+    map<Date, pair<vector<string>, set<string>>> events;
+    set<Date> dates;
 };
 
 bool operator<(pair<Date, vector<string>> lhs, pair<Date, vector<string>> rhs);
