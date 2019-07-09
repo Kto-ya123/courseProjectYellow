@@ -43,9 +43,9 @@ int Database::RemoveIf(std::function<bool(const Date&, const string&)> predicate
     int count = 0;
     for(auto iterMap(events.begin()); iterMap != events.end();){
         Date delDate = iterMap->first;
-        auto predicateForErase = [&count, predicate, delDate, this](string& event){
+        auto predicateForErase = [&count, predicate, delDate](string& event){
             if(predicate(delDate, event)){
-                this->dbEvents[delDate].erase(event);
+                //this->dbEvents[delDate].erase(event);
                 count++;
                 return false;
             }else
@@ -55,7 +55,7 @@ int Database::RemoveIf(std::function<bool(const Date&, const string&)> predicate
         //iterMap->second.erase(delIter, iterMap->second.end());
         int counter = iterMap->second.end() - delIter;
         for(int i(0); i < counter; i++){
-            //dbEvents[delDate].erase(iterMap->second[iterMap->second.size() - 1]);
+            dbEvents[delDate].erase(iterMap->second[iterMap->second.size() - 1]);
             iterMap->second.pop_back();
         }
         if(iterMap->second.size() == 0){

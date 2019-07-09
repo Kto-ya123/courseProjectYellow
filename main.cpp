@@ -26,7 +26,7 @@ ostream& operator<< (ostream& os, const pair<Date, vector<string>>& outData){
 void TestAll();
 
 int main() {
-  //TestAll();
+  TestAll();
   Database db;
 
   for (string line; getline(cin, line); ) {
@@ -94,19 +94,21 @@ int main() {
 void TestBase(){
     Database db;
     {
-
-        for(int i(0); i < 10000; i++){
-            db.Add(Date(i, 11, 10), to_string(i));
+        float startAdding = clock()/(float)CLOCKS_PER_SEC;
+        for(int j(0); j < 100; j++){
+            for(int i(0); i < 20000; i++){
+                db.Add(Date(j, 11, 10), to_string(i));
+            }
         }
-        db.Print(cout);
+        float timeAdding = (clock()/(float)CLOCKS_PER_SEC) - startAdding;
+        //db.Print(cout);
         float fTimeStart = clock()/(float)CLOCKS_PER_SEC;
-        for(int i(0); i < 1000; i++){
-            auto condition = make_shared<EventComparisonNode>(EventComparisonNode(Comparison::Equal, to_string(i)));
+        for(int i(0); i < 2; i++){
+            auto condition = make_shared<EventComparisonNode>(EventComparisonNode(Comparison::NotEqual, to_string(i)));
             auto predicate = [condition](const Date& date, const string& event) {
                 return condition->Evaluate(date, event);
             };
             db.RemoveIf(predicate);
-
         }
         float fTimeEnd = clock()/(float)CLOCKS_PER_SEC;
         float timeRemoveOne = fTimeEnd - fTimeStart;
@@ -144,6 +146,7 @@ void TestBase(){
         }
         }
         float timeFind = (clock()/(float)CLOCKS_PER_SEC) - fTimeEnd;
+        cout << "timeAdding: " << timeAdding <<endl;
         cout << "timeDeleteByOne: " << timeRemoveOne <<endl;
         cout << "timeLast: " << timeLast <<endl;
         cout << "timeAdd: " << timeAdd <<endl;

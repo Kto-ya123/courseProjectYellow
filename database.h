@@ -25,6 +25,7 @@ public:
     void Print(ostream& os) const;
 private:
     map<Date, vector<string>> events;
+    //map<Date, pair<vector<string>, set<string>>> events;
     map<Date, set<string>> dbEvents;
 };
 

@@ -9,10 +9,10 @@
 	<string>
 	<iomanip>
 
-1561973622 source:/home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/database.cpp
+1562665057 source:/home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/database.cpp
 	"database.h"
 
-1561973293 /home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/database.h
+1562665088 /home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/database.h
 	<exception>
 	<iostream>
 	<cmath>
@@ -27,7 +27,7 @@
 	<algorithm>
 	<iomanip>
 
-1561973579 source:/home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/main.cpp
+1562664936 source:/home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/main.cpp
 	"database.h"
 	"condition_parser.h"
 	"test_runner.h"
