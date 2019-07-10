@@ -14,28 +14,13 @@ void Database::Add(const Date& date, const string& inputEvents){
 
 void Database::Print(ostream& os) const {
     for(const auto& eventsDate : events){
-        string date = "";
-        int num = eventsDate.first.GetYear();
-        if(num < 10){
-            date += "000";
-        }else if(num < 100){
-            date += "00";
-        }else if(num < 1000){
-            date += "0";
-        }
-        date += to_string(num) + '-';
-        num = eventsDate.first.GetMonth();
-        if(num < 10){
-            date += "0";
-        }
-        date += to_string(num) + '-';
-        num = eventsDate.first.GetDay();
-        if(num < 10){
-            date += "0";
-        }
-        date += to_string(num);
+        ostringstream str;
+        str << setfill('0');
+        str << setw(4) << eventsDate.first.GetYear() << '-';
+        str << setw(2) << eventsDate.first.GetMonth() << '-';
+        str << setw(2) << eventsDate.first.GetDay();
         for(const auto& event : eventsDate.second.first){
-            os << date << " " << event << endl;
+            os << str.str() << " " << event << endl;
         }
     }
 };
@@ -82,11 +67,10 @@ vector<string> Database::FindIf(std::function<bool(const Date&, const string&)> 
 }
 
 string Database::Last(const Date& date)const{
-    auto foundIter = lower_bound(events.begin(), events.end(), pair<Date, pair<vector<string>, set<string>>>{date, {{""}, {""}}});
-    if(foundIter != events.begin() || date == foundIter->first){
-        if(date != foundIter->first){
-            --foundIter;
-        }
+
+    /*auto foundIter = upper_bound(events.begin(), events.end(), pair<Date, pair<vector<string>, set<string>>>{date, {{""}, {""}}});
+    if(foundIter != events.begin()){
+        --foundIter;
         return foundIter->first.GetDateString() + " "
             + foundIter->second.first[foundIter->second.first.size() - 1];
     }else{
@@ -94,6 +78,17 @@ string Database::Last(const Date& date)const{
     }
     return foundIter->first.GetDateString() + " "
             + foundIter->second.first[foundIter->second.first.size() - 1];
+    */
+    auto foundIter = upper_bound(dates.begin(), dates.end(), date);
+    if(foundIter != dates.begin()){
+        --foundIter;
+        return foundIter->GetDateString() + " "
+            + events.at(*foundIter).first[events.at(*foundIter).first.size() - 1];
+    }else{
+        return "No entries";
+    }
+    return foundIter->GetDateString() + " "
+            + events.at(*foundIter).first[events.at(*foundIter).first.size() - 1];
 }
 
 bool operator<(const pair<Date, pair<vector<string>, set<string>>>& lhs, const pair<Date, pair<vector<string>, set<string>>>& rhs){

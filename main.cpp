@@ -26,7 +26,7 @@ ostream& operator<< (ostream& os, const pair<Date, vector<string>>& outData){
 void TestAll();
 
 int main() {
-  TestAll();
+  //TestAll();
   Database db;
 
   for (string line; getline(cin, line); ) {
@@ -125,6 +125,9 @@ void TestBase(){
         float timeAdd = (clock()/(float)CLOCKS_PER_SEC) - fTimeEnd;
         fTimeEnd = clock()/(float)CLOCKS_PER_SEC;
         db.Print(cout);
+        float fTimePrint = (clock()/(float)CLOCKS_PER_SEC) - fTimeEnd;
+        fTimeEnd = clock()/(float)CLOCKS_PER_SEC;
+
         auto condition = make_shared<DateComparisonNode>(DateComparisonNode(Comparison::LessOrEqual, Date(9999, 9,9)));
         auto predicate = [condition](const Date& date, const string& event) {
             return condition->Evaluate(date, event);
@@ -146,6 +149,7 @@ void TestBase(){
         }
         }
         float timeFind = (clock()/(float)CLOCKS_PER_SEC) - fTimeEnd;
+        cout << "timePrint: " << fTimePrint <<endl;
         cout << "timeAdding: " << timeAdding <<endl;
         cout << "timeDeleteByOne: " << timeRemoveOne <<endl;
         cout << "timeLast: " << timeLast <<endl;
