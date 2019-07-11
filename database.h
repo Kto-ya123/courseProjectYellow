@@ -19,9 +19,9 @@ using namespace std;
 class Database {
 public:
     void Add(const Date& date, const string& inputEvents);
-    int RemoveIf(std::function<bool(const Date&, const string&)>);
+    int RemoveIf(const std::function<bool(const Date&, const string&)>&);
     string Last(const Date& date)const;
-    vector<string> FindIf(std::function<bool(const Date&, const string&)>)const;
+    vector<string> FindIf(const std::function<bool(const Date&, const string&)>&)const;
     void Print(ostream& os) const;
 private:
     map<Date, pair<vector<string>, set<string>>> events;

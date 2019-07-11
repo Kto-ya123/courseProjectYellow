@@ -9,10 +9,10 @@
 	<string>
 	<iomanip>
 
-1562753296 source:/home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/database.cpp
+1562850871 source:/home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/database.cpp
 	"database.h"
 
-1562673201 /home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/database.h
+1562846576 /home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/database.h
 	<exception>
 	<iostream>
 	<cmath>
@@ -27,7 +27,7 @@
 	<algorithm>
 	<iomanip>
 
-1562753323 source:/home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/main.cpp
+1562850844 source:/home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/main.cpp
 	"database.h"
 	"condition_parser.h"
 	"test_runner.h"
@@ -50,7 +50,7 @@
 	"token.h"
 	<map>
 
-1561456107 /home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/token.h
+1562849737 /home/ITRANSITION.CORP/a.luzgin/example/CourseProjectYellow/token.h
 	<sstream>
 	<vector>
 

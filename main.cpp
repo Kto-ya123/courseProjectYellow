@@ -26,7 +26,7 @@ ostream& operator<< (ostream& os, const pair<Date, vector<string>>& outData){
 void TestAll();
 
 int main() {
-  //TestAll();
+  TestAll();
   Database db;
 
   for (string line; getline(cin, line); ) {
@@ -74,7 +74,7 @@ int main() {
   return 0;
 }
 
-/*void TestParseEvent() {
+void TestParseEvent() {
   {
     istringstream is("event");
     AssertEqual(ParseEvent(is), "event", "Parse event without leading spaces");
@@ -90,10 +90,22 @@ int main() {
     events.push_back(ParseEvent(is));
     AssertEqual(events, vector<string>{"first event  ", "second event"}, "Parse multiple events");
   }
-}*/
+}
 void TestBase(){
     Database db;
     {
+        float AddingOnOneDate = clock()/(float)CLOCKS_PER_SEC;
+        for(int i(0); i < 20000; i++){
+            db.Add(Date(1980, 11, 10), to_string(i));
+        }
+        AddingOnOneDate = clock()/(float)CLOCKS_PER_SEC - AddingOnOneDate;
+        auto condition1 = make_shared<DateComparisonNode>(DateComparisonNode(Comparison::LessOrEqual, Date(9999, 9,9)));
+        auto predicate1 = [condition1](const Date& date, const string& event) {
+            return condition1->Evaluate(date, event);
+        };
+        db.RemoveIf(predicate1);
+
+
         float startAdding = clock()/(float)CLOCKS_PER_SEC;
         for(int j(0); j < 100; j++){
             for(int i(0); i < 20000; i++){
@@ -149,6 +161,7 @@ void TestBase(){
         }
         }
         float timeFind = (clock()/(float)CLOCKS_PER_SEC) - fTimeEnd;
+        cout << "timeAddingOneDate: " << AddingOnOneDate <<endl;
         cout << "timePrint: " << fTimePrint <<endl;
         cout << "timeAdding: " << timeAdding <<endl;
         cout << "timeDeleteByOne: " << timeRemoveOne <<endl;

@@ -6,7 +6,6 @@
 void Database::Add(const Date& date, const string& inputEvents){
     auto& eventsDate =  events[date];
     if(eventsDate.second.find(inputEvents) == eventsDate.second.end()){
-        dates.insert(date);
         eventsDate.second.insert(inputEvents);
         eventsDate.first.push_back(inputEvents);
     }
@@ -26,11 +25,11 @@ void Database::Print(ostream& os) const {
 };
 
 
-int Database::RemoveIf(std::function<bool(const Date&, const string&)> predicate){
+int Database::RemoveIf(const std::function<bool(const Date&, const string&)>& predicate){
     int count = 0;
     for(auto iterMap(events.begin()); iterMap != events.end();){
-        Date delDate = iterMap->first;
-        auto predicateForErase = [&count, predicate, delDate](string& event){
+        const Date& delDate = iterMap->first;
+        auto predicateForErase = [&count, &predicate, &delDate](string& event){
             if(predicate(delDate, event)){
                 count++;
                 return false;
@@ -45,7 +44,6 @@ int Database::RemoveIf(std::function<bool(const Date&, const string&)> predicate
             iterMap->second.first.pop_back();
         }
         if(iterMap->second.first.size() == 0){
-            dates.erase(iterMap->first);
             events.erase(iterMap++);
         }else {
             iterMap++;
@@ -54,7 +52,7 @@ int Database::RemoveIf(std::function<bool(const Date&, const string&)> predicate
     return count;
 }
 
-vector<string> Database::FindIf(std::function<bool(const Date&, const string&)> predicate)const{
+vector<string> Database::FindIf(const std::function<bool(const Date&, const string&)>& predicate)const{
     vector<string> foundEvents;
     for(const auto& eventsOfDate : events){
             for(const auto& event : eventsOfDate.second.first){
@@ -67,8 +65,7 @@ vector<string> Database::FindIf(std::function<bool(const Date&, const string&)> 
 }
 
 string Database::Last(const Date& date)const{
-
-    /*auto foundIter = upper_bound(events.begin(), events.end(), pair<Date, pair<vector<string>, set<string>>>{date, {{""}, {""}}});
+    auto foundIter = upper_bound(events.begin(), events.end(), date);
     if(foundIter != events.begin()){
         --foundIter;
         return foundIter->first.GetDateString() + " "
@@ -76,21 +73,12 @@ string Database::Last(const Date& date)const{
     }else{
         return "No entries";
     }
-    return foundIter->first.GetDateString() + " "
-            + foundIter->second.first[foundIter->second.first.size() - 1];
-    */
-    auto foundIter = upper_bound(dates.begin(), dates.end(), date);
-    if(foundIter != dates.begin()){
-        --foundIter;
-        return foundIter->GetDateString() + " "
-            + events.at(*foundIter).first[events.at(*foundIter).first.size() - 1];
-    }else{
-        return "No entries";
-    }
-    return foundIter->GetDateString() + " "
-            + events.at(*foundIter).first[events.at(*foundIter).first.size() - 1];
 }
 
-bool operator<(const pair<Date, pair<vector<string>, set<string>>>& lhs, const pair<Date, pair<vector<string>, set<string>>>& rhs){
-    return lhs.first < rhs.first;
+bool operator<(const pair<Date, pair<vector<string>, set<string>>>& lhs, const Date& date){
+    return lhs.first < date;
+}
+
+bool operator<(const Date& date, const pair<Date, pair<vector<string>, set<string>>>& lhs){
+    return date < lhs.first;
 }

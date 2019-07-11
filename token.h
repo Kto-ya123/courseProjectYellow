@@ -15,7 +15,6 @@ enum class TokenType {
 };
 
 struct Token {
-    //Token(val, typeOperation);
     const string value;
     const TokenType type;
 };
