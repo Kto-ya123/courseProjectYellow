@@ -4,9 +4,9 @@
 
 
 void Database::Add(const Date& date, const string& inputEvents){
-    auto& eventsDate =  events[date];
-    if(eventsDate.second.find(inputEvents) == eventsDate.second.end()){
-        eventsDate.second.insert(inputEvents);
+    dates.insert(date);
+    auto& eventsDate = events[date];
+    if((eventsDate.second.insert(inputEvents)).second == true){
         eventsDate.first.push_back(inputEvents);
     }
 }
@@ -44,6 +44,7 @@ int Database::RemoveIf(const std::function<bool(const Date&, const string&)>& pr
             iterMap->second.first.pop_back();
         }
         if(iterMap->second.first.size() == 0){
+            dates.erase(iterMap->first);
             events.erase(iterMap++);
         }else {
             iterMap++;
@@ -65,11 +66,11 @@ vector<string> Database::FindIf(const std::function<bool(const Date&, const stri
 }
 
 string Database::Last(const Date& date)const{
-    auto foundIter = upper_bound(events.begin(), events.end(), date);
-    if(foundIter != events.begin()){
+    auto foundIter = upper_bound(dates.begin(), dates.end(), date);
+    if(foundIter != dates.begin()){
         --foundIter;
-        return foundIter->first.GetDateString() + " "
-            + foundIter->second.first[foundIter->second.first.size() - 1];
+        return foundIter->GetDateString() + " "
+            + events.at(*foundIter).first[events.at(*foundIter).first.size() - 1];
     }else{
         return "No entries";
     }

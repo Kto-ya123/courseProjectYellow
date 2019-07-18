@@ -44,9 +44,6 @@
 		<Unit filename="main.cpp" />
 		<Unit filename="node.cpp" />
 		<Unit filename="node.h" />
-		<Unit filename="oldSolution.cpp">
-			<Option target="Release" />
-		</Unit>
 		<Unit filename="token.cpp" />
 		<Unit filename="token.h" />
 		<Extensions>
